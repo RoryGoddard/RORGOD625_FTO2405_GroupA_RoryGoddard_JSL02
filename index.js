@@ -19,26 +19,31 @@ document.querySelector('#submitWorkout').addEventListener('click', displayWorkou
 // NOW LET'S DEBUG TO PREVENT DUPLICATE GOALS FROM BEING SUBMITTED 🚀
 
 const addNewGoal = () => {
-    const goalInput = document.querySelector('#goalInput').value;
-    const goalList = document.querySelector('#goalList');
+    // Define variables to reference the goalinput, to create a new goal li, and a remove button
+    const goalInputEl = document.querySelector("#goalInput")
+    const newGoalEl = document.createElement("li")
+    const removeBtnEl = document.createElement("button")
     
-    // ⚠️ Hint 1: Check for duplicates
-    // Use 'goalList' to get all existing goals and check if 'goalInput' matches any of them.
-    
-    // ⚠️ Hint 2: Prevent duplicates
-    // If a duplicate is found, display an alert to the user and don't add the goal to the list.
-    // If it's not a duplicate, proceed with adding it as a new goal.
-    
-    // ⚠️ Hint 3: Code structure
-    // You might want to wrap the duplicate-checking logic in an 'if' statement.
-    
-    // ⚠️ Hint 4: Event listener
-    // The event listener that removes goals when clicked is not related to this issue.
-    // Focus on preventing duplicates for now.
-    
-    const newGoal = document.createElement('li');
-    newGoal.textContent = goalInput;
-    goalList.appendChild(newGoal);
+    // Remove button logic
+    removeBtnEl.textContent = "Remove"
+    removeBtnEl.classList.add("remove-button")
+    removeBtnEl.addEventListener("click", function() {
+        goalList.removeChild(newGoalEl)
+        this.remove()
+    })
+
+    // New Goal logic
+    newGoalEl.textContent = goalInputEl.value
+    for (let i = 0; i < goalList.querySelectorAll("#goalList li").length; i++) {
+        if (goalList.querySelectorAll("#goalList li")[i].textContent === newGoalEl.textContent) {
+            alert("This goal already exists.")
+            return
+        }
+    }
+
+    goalList.appendChild(newGoalEl)
+    goalList.appendChild(removeBtnEl)
+    goalInputEl.value = ""
 };
 
 // Add event listener to the goal submit button
