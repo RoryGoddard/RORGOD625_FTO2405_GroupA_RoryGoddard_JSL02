@@ -44,11 +44,18 @@ const addNewGoal = () => {
 // Add event listener to the goal submit button
 document.querySelector('#submitGoal').addEventListener('click', addNewGoal);
 
-///
+/// Add functionality to prevent negative glasses of water
 let waterIntake = 0;
 const updateWaterIntake = (change) => {
-    waterIntake += change;
-    document.querySelector('#waterIntakeDisplay').textContent = `${waterIntake} glasses 💦`;
+    let waterConsumedDivEl = document.querySelector("#waterIntakeDisplay")
+    let waterText = waterConsumedDivEl.textContent
+    let glasses = Number(Array.from(waterText)[0])
+    if (change < 0 && glasses === 0) {
+        return
+    } else {
+        waterIntake += change;
+        document.querySelector('#waterIntakeDisplay').textContent = `${waterIntake} glasses 💦`;
+    }
 };
 
 document.querySelector('#increaseWater').addEventListener('click', () => updateWaterIntake(1));
